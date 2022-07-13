@@ -1,60 +1,47 @@
-#include <stdio.h>
+#include<stdio.h>
+#include<stdlib.h>
 int main()
 {
-    int data[10];
-    int datarec[10],c,c1,c2,c3,i;
-    printf("Enter 4 bits of data one by one :\n");
-    scanf("%d",&data[0]);
-    scanf("%d",&data[1]);
-    scanf("%d",&data[2]);
-    scanf("%d",&data[4]);
-
-    data[6]=data[0]^data[2]^data[4];
-    data[5]=data[0]^data[1]^data[4];
-    data[3]=data[0]^data[1]^data[2];
-
-    printf("Encoding data is :\n");
-    for(i=0;i<7;i++)
-    {
-        printf("%d",data[i]);
-    }
-
-    printf("\nEnter received data bits one by one\n");
-    for(i=0;i<7;i++)
-    {
-        scanf("%d",&datarec[i]);
-    }
-
-    c1=datarec[6]^datarec[4]^datarec[2]^datarec[0];
-    c2=datarec[5]^datarec[4]^datarec[1]^datarec[0];
-    c3=datarec[3]^datarec[2]^datarec[1]^datarec[0];
-    c=(c3*4)+(c2*2)+c1;
-
-    if(c==0 && datarec[6]==data[6] && datarec[5]==data[5] && datarec[3]==data[3]){
-        printf("No error detected.\n");
-    }
-    else{
-        printf("Error detected at position %d from the right.\n",c );
-
-        printf("\nData sent :");
-        for(i=0;i<7;i++)
-        {
-            printf("%d",data[i]);
-        }
-        printf("\nData received : ");
-        for(i=0;i<7;i++)
-        {
-           printf("%d",datarec[i]);
-        }
-
-        printf("\nCorrect message is\n");
-
-        if(datarec[7-c]==0){
-        datarec[7-c]=1;}
-        else{
-        datarec[7-c]=0;}
-         for (i=0;i<7;i++) {
-        printf("%d",data[i]);}
-    }
-    return 0;
+int a[10],b[10],i,c,c1,c2,c3;
+printf("Enter 4 data bits to be sent one by one\n");
+scanf("%d",&a[0]);
+scanf("%d",&a[1]);
+scanf("%d",&a[2]);
+scanf("%d",&a[4]);
+a[3] = a[0]^a[1]^a[2];
+a[5] = a[0]^a[1]^a[4];
+a[6] = a[0]^a[2]^a[4];
+printf("DATA SENT:\n");
+for(i=0;i<7;i++)
+{
+printf("%d ",a[i]);
+}
+printf("\nEnter the received data bit one by one\n");
+for(i=0;i<7;i++)
+{
+scanf("%d",&b[i]);
+}
+c1=b[3]^b[0]^b[1]^b[2];
+c2=b[5]^b[0]^b[1]^b[4];
+c3=b[6]^b[0]^b[2]^b[4];
+c=(4*c1)+(2*c2)+(1*c3);
+if(c==0)
+{
+printf("NO ERROR IN BIT RECEIVED\n");
+}
+else{
+printf("ERROR IN BIT %d RECEIVED\n",c);
+printf("DATA RECEIVED IS\n ");
+for(i=0;i<7;i++)
+{
+printf("%d ",b[i]);
+}
+b[7-c] = 1 - b[7-c];
+printf("\nCORRECT DATA IS\n ");
+for(i=0;i<7;i++)
+{
+printf("%d ",b[i]);
+}
+}
+return 0;
 }
